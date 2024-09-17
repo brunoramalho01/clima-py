@@ -1,3 +1,10 @@
-*{
-    background-color: rgb(112, 112, 112);
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
+.back {
+    background-color: aqua; /* Altere #yourColor para a cor desejada */
+    height: 100%;
+    width: 100%;
 }
