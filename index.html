@@ -22,36 +22,38 @@
 
     <!-- Adicionando o script da API de clima -->
     <script>
-        const apiKey = 'SUA_CHAVE_API_AQUI'; // Insira sua chave de API do OpenWeather aqui
+        const apiKey = 'b540ef71cbe3c9eee393b2f17b1337d9'; // Insira sua chave de API do OpenWeather aqui
         const lat = -23.5505; // Latitude (exemplo: São Paulo)
         const lon = -46.6333; // Longitude (exemplo: São Paulo)
 
         // Função para buscar os dados do clima
         async function getWeather() {
-            const url = `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly,daily,alerts&units=metric&appid=${apiKey}`;
+            const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}`;
             try {
                 const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`Erro na resposta da API: ${response.statusText}`);
+                }
                 const data = await response.json();
                 console.log(data); // Para debug
 
                 // Atualizando o HTML com os dados recebidos da API
                 document.getElementById('weather-card').innerHTML = `
                     <div class="d-flex">
-                        <h6 class="flex-grow-1">${data.timezone}</h6>
+                        <h6 class="flex-grow-1">${data.name}</h6>
                         <h6>${new Date().toLocaleTimeString()}</h6>
                     </div>
                     <div class="d-flex flex-column text-center mt-5 mb-4">
-                        <h6 class="display-4 mb-0 font-weight-bold">${data.current.temp}°C</h6>
-                        <span class="small" style="color: #000000">${data.current.weather[0].description}</span>
+                        <h6 class="display-4 mb-0 font-weight-bold">${data.main.temp}°C</h6>
+                        <span class="small" style="color: #000000">${data.weather[0].description}</span>
                     </div>
                     <div class="d-flex align-items-center">
                         <div class="flex-grow-1" style="font-size: 1rem;">
-                            <div><i class="fas fa-wind fa-fw" style="color: #868B94;"></i> <span class="ms-1">${data.current.wind_speed} km/h</span></div>
-                            <div><i class="fas fa-tint fa-fw" style="color: #868B94;"></i> <span class="ms-1">${data.current.humidity}%</span></div>
-                            <div><i class="fas fa-sun fa-fw" style="color: #868B94;"></i> <span class="ms-1">${data.current.uvi} UV</span></div>
+                            <div><i class="fas fa-wind fa-fw" style="color: #868B94;"></i> <span class="ms-1">${data.wind.speed} km/h</span></div>
+                            <div><i class="fas fa-tint fa-fw" style="color: #868B94;"></i> <span class="ms-1">${data.main.humidity}%</span></div>
                         </div>
                         <div>
-                            <img src="http://openweathermap.org/img/wn/${data.current.weather[0].icon}@2x.png" width="100px" alt="Clima">
+                            <img src="http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png" width="100px" alt="Clima">
                         </div>
                     </div>
                 `;
