@@ -6,4 +6,4 @@
 
 ### API RestFull OpenWeather
 
-# Eduardo Reis
+# Eduzera
